@@ -1,12 +1,15 @@
 
-{% block cat %}
+{% load categories_tags %}
+{% load static %}
 
-    <div class="categry_header">
+{% block cat %}
+    <div class="category_sidebar">
         {% for category in cats %}
             <div class="category_menu">
-                <a href="{{ category.get_absolute_url }}" class="category_menu_link">{{ category.name }}</a>
+                <a href="{{ category.get_absolute_url }}" class="category_menu_link">&#10020;{{ category.name }}</a>
             </div>
-        {% endfor%}
-    </div>
+            {% endfor%}
+            <img src="{% static 'img/ship2.svg' %}" class="svg" alt="ship">
+        </div>
         
 {% endblock cat %} 
