@@ -28,9 +28,7 @@
     {% else %}
         <img src="{% static 'img/no_image.jpg' %}"  alt="{{ ad_detail.title }}" class="float-start imgshadow" width="180" height="120" >
     {% endif %}
-    {% comment %} {% else %}
-        <p>Изображение не загружено</p>
-    {% endif %} {% endcomment %}
+    
         {% comment %} <div class="text_ad"> {% endcomment %}
             <h5 class="ad_title">{{ ad_detail.title|upper }}</h5>
         {% comment %} </div> {% endcomment %}

@@ -10,10 +10,6 @@ from .views import (AdListView, AdDetailView,
     DraftUpdateView, subscription_view, 
     unsubscribe_user, subscribe_category, 
     ad_like_user)
-# popular_posts
-    # ad_like, ad_dislike)
-
-#SubscriptionView  #all_ad_author   #FilterAdsByAuthorsView #AuthorAdsListView, author_ads #ReplyCreateView
 
 
 urlpatterns = [
