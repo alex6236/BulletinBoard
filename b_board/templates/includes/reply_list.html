@@ -1,0 +1,91 @@
+{% load static %}
+
+{% block content %}
+
+{% if request.user == ad_detail.author %}
+    {% for reply in replies %}
+        <div>
+            <p>Автор: {{ reply.author }}</p>
+            <div class="wrapper_ad">
+                {% if reply.author.profile.avatar %}
+                    <figure >
+                        <img src="{{ reply.author.profile.avatar.url }}" class="rounded-0 rounded-circle" alt="Аватар" width="50" height="50" class="float-start imgshadow">
+                    </figure>
+                {% else %}
+                    <img src="{% static 'img/default.png' %}" class="rounded-0 rounded-circle float-start imgshadow" alt="Аватар" width="50" height="50">
+                {% endif %}
+                <p class="text_ad">{{ reply.text }}</p>
+            </div>
+            <div class="line_block">
+                <small>{{ reply.created_reply }}</small>
+            </div>
+            {% if reply.is_published %}
+                <div class="line_block">
+                    <p>Опубликовано</p>
+                    <form method="post" action="{% url 'reply_delete' reply.id %}">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-outline-info btn-sm" value="Удалить">
+                    </form>
+                </div>
+            {% else %}
+                <div class="line_block">
+                    <p>Не опубликовано</p>
+                    <form method="post" action="{% url 'reply_publish' reply.id %}">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-outline-info btn-sm" value="Опубликовать">
+                    </form>
+                    <form method="post" action="{% url 'reply_delete' reply.id %}">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-outline-info btn-sm"  value="Удалить">
+                    </form>
+                </div>
+            {% endif %}
+            
+            <hr>
+        </div>
+    {% endfor %}
+    {% else %}
+        {% for reply in replies %}    
+        <p>Автор: {{ reply.author }}</p>
+            <div class="wrapper_ad">
+
+                {% if reply.is_published %}
+                    {% if reply.author.profile.avatar %}
+                        <figure >
+                            <img src="{{ reply.author.profile.avatar.url }}" class="img-fluid rounded-0 rounded-circle" alt="Аватар" width="50">
+                        </figure>
+                    {% else %}
+                        <img src="{% static 'img/default.png' %}" class="img-fluid rounded-0 rounded-circle" alt="{{ profile }}" width="50">
+                    {% endif %}
+                        <p class="text_ad">{{ reply.text }}</p>
+                {% else %}
+                    {% if reply.author.profile.avatar %}
+                        <figure >
+                            <img src="{{ reply.author.profile.avatar.url }}" class="img-fluid rounded-0 rounded-circle" alt="Аватар" width="50">
+                        </figure>
+                    {% else %}
+                        <img src="{% static 'img/default.png' %}" class="img-fluid rounded-0 rounded-circle" alt="Аватар" width="50">
+                    {% endif %}
+                        <p class="text_ad">На проверке</p>
+                {% endif %}
+
+            </div>
+                <div class="line_block">
+                    <small>{{ reply.created_reply }}</small>
+                </div>
+            <hr>
+        {% endfor %}
+            <hr>
+    {% endif %}
+
+
+    {% if request.user.is_authenticated %}    
+        <h4>Обратная связь</h4>
+        <form method="post" action="{{ get_absolute_url }}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-outline-info">Отправить </button>
+        </form> 
+    {% endif %} 
+    
+{% endblock content %}

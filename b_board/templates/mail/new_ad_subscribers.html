@@ -1,0 +1,21 @@
+{% load categories_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новая статья</title>
+</head>
+
+<body>
+
+    <p>Здравствуйте, {{ user.username }}!</p>
+    <p>В категории "{{ ad.category_ad.name }}" опубликовано новое объявление:</p>
+    <h3>{{ ad.title }}</h3>
+    <p>{{ ad.text_ad|truncatechars:120 }}</p>
+    <a href="http://127.0.0.1:8000{{ ad_url }}">Перейти к объявлению>>></a>
+
+</body>
+</html>

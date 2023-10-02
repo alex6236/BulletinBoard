@@ -1,0 +1,59 @@
+{% block header %}
+<header>
+  <div class="px-3 py-2 text-bg-dark header_color text-reset">
+      <div class="container header_color ">
+        <div class="my_header d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+          <ul class="nav col-12 col-lg-auto my-2 justify-content-start my-md-0 text-small">
+            <li>
+              <a href="{% url 'ad_list' %}" class="nav-link text-white">
+                Главная
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'ad_create' %}" class="nav-link text-white">
+                Добавить объявление
+              </a>
+            </li>
+          </ul>
+              <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto" role="search" 
+              action="{% url 'search_header' %}" method="get">
+                <input type="search" name="q" class="form-control my_form" 
+                placeholder="Поиск..." aria-label="Search">
+              </form>
+
+          <ul class="nav col-12 col-lg-auto my-2 justify-content-start my-md-0 text-small">
+            
+            {% if user.is_authenticated %}
+            <li>
+                <span class="nav-link text-white">{{ request.user.username }}</span>
+            </li>
+            <li>
+                <a href="{% url 'profile_detail' request.user.profile.slug %}" class="nav-link text-white">
+                    Профиль
+                  </a>
+            </li>
+            <li>
+              <a href="{% url 'account_logout' %}" class="nav-link text-white">
+                Выход
+              </a>
+            </li> 
+            {% else %}
+              
+            <li>
+              <a href="{% url 'account_login' %}" class="nav-link text-white">
+                Войти
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'account_signup' %}" class="nav-link text-white">
+                Регистрация
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+  {% endblock header %}

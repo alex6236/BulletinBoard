@@ -1,0 +1,82 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% comment %} <img src="media/images/decoration/orig.gif" class="header_gif" alt="header"> {% endcomment %}
+{% block content %}
+{% comment %} <h3 class="category_sidebar ad_category">{{ ad_detail.category_ad }}</h3> {% endcomment %}
+<div class="category_ad_list">
+    <img src="{% static 'img/2.svg' %}" class="svg_category_ad_list" alt="ship"  id="my-svg">
+    <h4 class="category_sidebar ad_category">{{ ad_detail.category_ad }}</h4>
+    <img src="{% static 'img/2.svg' %}" class="svg_category_ad_list" alt="ship"  id="my-svg">
+</div>
+<div class="line_block">
+    <p>Автор: {{ ad_detail.author }}</p>
+    <a class="text-reset" href="{% url 'ad_author' %}">Посмотреть объявления автора</a>
+</div>
+
+<div class="">
+    {% if ad_detail.video %}
+        <div class="video_deteil">
+            <video width="85%" height="" controls>
+            <source src="{{ ad_detail.video.url }}">
+            видео не поддерживается
+            </video>
+        </div>
+    {% elif ad_detail.pictures %}
+        <img src="{{ ad_detail.pictures.url }}" alt="{{ ad_detail.title }}" class="float-start imgshadow" width="180" height="120" >
+    {% else %}
+        <img src="{% static 'img/no_image.jpg' %}"  alt="{{ ad_detail.title }}" class="float-start imgshadow" width="180" height="120" >
+    {% endif %}
+    {% comment %} {% else %}
+        <p>Изображение не загружено</p>
+    {% endif %} {% endcomment %}
+        {% comment %} <div class="text_ad"> {% endcomment %}
+            <h5 class="ad_title">{{ ad_detail.title|upper }}</h5>
+        {% comment %} </div> {% endcomment %}
+            <p>{{ ad_detail.text_ad }}</p>
+</div>
+{% comment %} =============================== {% endcomment %}
+{% comment %} <div> {% endcomment %}
+
+<div class="detail_time_like">
+    {% if user.is_authenticated %}
+        <form action="{% url 'ad_like' object.slug %}" method="POST">
+            {% csrf_token %}
+        
+            {% if ad_is_liked %}
+            <button type="submit" name="ad_id"  class="no_background" value="{{object.slug}}"><img src="{% static 'img/iconizer-suit-heart-fill.svg' %}"  alt="ship"></button>
+            {% else %}
+            <button type="submit" name="ad_id"  class="no_background" value="{{object.slug}}"><img src="{% static 'img/iconizer-suit-heart.svg' %}" alt="ship"></button>
+            {% endif %}
+        </form>
+      {% else %}
+            <a class="btn btn-outline-info btn-sm" href="{% url 'account_login' %}">войдите чтобы поставить лайк</a><br>
+      {% endif %}
+      <strong class="text-secondary text_ad">Понравилось: {{ number_likes }}</strong> 
+</div>
+<hr>  
+
+    {% comment %} ============================ {% endcomment %}
+    {% if request.user.is_authenticated and ad_detail.author|lower == request.user.username|lower %}
+    <div class="block_link">
+        <div class="edit_btn block_shadow">
+        <a class="edit_link" href="{% url 'ad_update' slug=ad_detail.slug %}">Редактировать</a>
+        </div>
+        <div class="delete_btn block_shadow">
+        <a class="delete_link " href="{% url 'ad_delete' slug=ad_detail.slug %}">Удалить</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% comment %} =================================== {% endcomment %}
+    {% if not request.user.is_authenticated %}    
+        <p>Чтобы отправить сообщение, пожалуйста, <a href="{% url 'account_login' %}" class="text-reset">авторизуйтесь</a> или <a href="{% url 'account_signup' %}" class="text-reset">зарегистрируйтесь</a>.</p>
+    {% endif %}
+    <hr>
+    <h4 class="category_sidebar ad_category">отзывы читателей</h4>
+    <hr>
+    {% include 'includes/reply_list.html' %}
+    
+    <img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+{% endblock content %}

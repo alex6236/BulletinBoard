@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% comment %} {% block title %} {{ title }} {% endblock title %} {% endcomment %}
+
+{% block content %}
+
+<div class="ad_create">
+    <div class="card-body nth-shadow">
+       
+        <h2 class="category_sidebar ad_category ">Добавить объявление</h2>
+
+        <form method="post" action="{% url 'ad_create' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-grid gap-2 d-md-block mt-2">
+                <button type="submit" class="btn btn-outline-info">Добавить объявление</button>
+            </div>
+        </form>
+    </div>
+</div>
+<img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+{% endblock %}

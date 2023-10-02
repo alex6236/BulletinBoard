@@ -1,0 +1,45 @@
+{% extends 'main.html' %}
+{% load static %}
+
+
+{% block content %}
+{% comment %} <h3>{{ category }}</h3> {% endcomment %}
+    {% if draft_list %}
+        {% for ad in draft_list %}
+            <div class="line_block">
+                <p>Автор: {{ ad.author }}</p> 
+                <a class="all_ad_author" href="{% url 'all_ad_author' author_id=ad.author.id %}">Все объявления автора</a>
+            </div> 
+                <div class="wrapper_ad">
+                    <div class="img_ad">
+                    {% if ad.video %}
+                    <video width="320" height="240" controls>
+                        <source src="{{ ad.video.url }}" type="video/mp4">
+                        видео не поддерживается
+                    </video>
+                        {% elif ad.pictures %}
+                            <a href="{{ ad.get_absolute_url }}"><img src="{{ ad.pictures.url }}" alt="{{ ad.title }}" width="180" height="120"></a>
+                        {% else %}
+                            <img src="{% static 'img/no_image.jpg' %}"  alt="{{ ad_detail.title }}" width="180">
+                        {% endif %}
+                    </div>
+                    
+                    <div class="text_ad">
+                        <a  class="ad_title" href="{{ ad.get_absolute_url }}"><h5>{{ ad.title|upper }}</h5></a>
+                        <p >{{ ad.text_ad|truncatechars:120 }}<a class="btn btn-link" href="{{ ad.get_absolute_url }}">Подробнее>></a></p>
+                    </div>
+                </div>
+                <div class="line_block">
+                    <small>{{ ad.time_create }}</small>
+                </div>
+                <hr>
+
+        {% endfor %}
+    {% else %}
+        <h4>нет объявлений</h4>
+    {% endif %}
+
+    {% include 'includes/paginator.html' %}
+    
+    <img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+{% endblock %}

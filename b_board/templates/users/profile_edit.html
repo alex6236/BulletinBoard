@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<h2 class="category_sidebar ad_category">редактирование профиля</h2>
+<div class="ad_create sub_list">
+   <div class="card-body">
+      <div class="card-title nth-card-title">
+         <h4>Изменение профиля</h4>
+      </div>
+      <form method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+         {{ user_form.as_p }}
+         {{ form.as_p }}
+         <div class="d-grid gap-2 d-md-block mt-2">
+            <button type="submit" class="btn btn-outline-info">Подтвердить изменение профиля</button>
+         </div>
+      </form>
+   </div>
+</div>
+<img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+{% endblock %}

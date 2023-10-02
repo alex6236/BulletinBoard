@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'my_styles/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'my_styles/styles.css' %}">
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+    <div class="container">
+        <img src="{% static 'img/orig.gif' %}" class="header_gif" alt="header">
+        <div class="sticky">{% include 'includes/header.html' %}</div>
+    
+        <div class="row">
+            <div class="col-2">
+                <div class="sticky_category">
+                    <h3 class="category_sidebar">классы</h3>
+                    <hr>
+                    {% load categories_tags %}
+                    {% all_categories %}
+                </div>
+            </div>
+            <div  class="col-7 vl">
+                {% include 'includes/messages.html' %}
+                {% block content %}
+            
+                {% endblock content %}
+            </div>
+            <div class="col-3">
+                <div class="sticky_category">
+                    <a href="{% url 'subscribe_list' %}" class="btn btn-outline-danger btn_sub">подписка на рассылку</a>
+                    <hr>
+                    {% load popular_ads_tags %}
+                    {% get_popular_ads %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% include 'includes/footer.html' %}
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+
+.container1 {
+  background-color: #1e1b1bb7;
+  /* background-color: #111111; */
+  display: flex;
+  height: 160px;
+  width: 100%;
+  border-top: 2px solid #4e759a;
+  opacity: .80;
+  padding: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.heading {
+  font-size: 2vw;
+  text-shadow: 2px 2px 0px #062441;
+  color: #4e759a;
+  mix-blend-mode: screen;
+  animation: fadeIn 2.5s linear forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+

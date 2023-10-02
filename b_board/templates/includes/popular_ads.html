@@ -1,0 +1,11 @@
+{% load popular_ads_tags %}
+{% block content %}
+    
+      <h3 class="category_sidebar ad_category">Топ 5 недели</h3>
+            <ol>
+            {% for ad in popular_ads %}
+                <li><h6 ><a class="ad_title" href="{{ ad.get_absolute_url }}">{{ ad.title|upper }}</a></h6></li>
+                {% endfor %}
+            </ol>
+  
+{% endblock content %}

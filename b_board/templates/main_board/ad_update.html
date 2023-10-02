@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+    <div  class="header_top"><h3>Редактировать запись</h3></div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-outline-info">Сохранить изменения</button>
+        </form>
+    <img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+{% endblock %}

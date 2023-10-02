@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+{% load static %}
+{% load account socialaccount %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<h2 class="category_sidebar ad_category">{% trans "Sign Up" %}</h2>
+<div class="sub_list">
+	
+	<p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+	
+	<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+	  {% csrf_token %}
+			<p>*Имя пользователя:{{ form.username }}</p> 
+			<p>Имя:{{ form.first_name }}</p>
+			<p>Фамилия:{{ form.last_name }}</p>
+			<p>*Электронная почта:{{ form.email }}</p>
+			<p>*Пароль:{{ form.password1 }}</p>
+			<p>*Повторить пароль:{{ form.password2 }}</p>
+	  {% if redirect_field_value %}
+	  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+	  {% endif %}
+	  <button class="btn btn-outline-info" type="submit">{% trans "Sign Up" %} &raquo;</button>
+	</form>
+
+	<h6>Войти с...</h6>
+	{% get_providers as socialaccount_providers %}
+	<div >
+		{% for provider in socialaccount_providers %}
+			<div class="d-grid" style="margin-bottom: 7px;">
+				<a title="{{provider.name}}" class="btn btn-outline-info" 
+				href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{provider.name}}"></i>{{provider.name}}</a>
+			</div>
+		{% endfor %}
+  	</div>
+</div>
+<img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+{% endblock %}
+

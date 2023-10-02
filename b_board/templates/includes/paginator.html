@@ -1,0 +1,38 @@
+
+{% block paginator %}
+{% if is_paginated %}
+    <div class="paginator">
+        <span class="arrow_links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">Первая</a>
+                <a class="a_arrow" href="?page={{ page_obj.previous_page_number }}">&#129144;</a>
+            {% else %}
+                <span class="page_end page_end_left">Первая &#129144</span>
+            {% endif %}
+        </span>
+        {% comment %} ======================= {% endcomment %}
+
+        {% comment %} {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <a class="num current_num">{{ num }}</a>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="num" href="?page={{ num }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %} {% endcomment %}
+
+        {% comment %} ========================== {% endcomment %}
+
+        <span class="current_page">
+            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </span>
+        <span class="arrow_links">
+            {% if page_obj.has_next %}
+                <a class="a_arrow" href="?page={{ page_obj.next_page_number }}">&#129146;</a>
+                <a class="a_arrow" href="?page={{ page_obj.paginator.num_pages }}">Последняя</a>
+            {% else %}
+                <span class="page_end">&#129146; Последняя</span>
+            {% endif %}
+        </span>
+    </div>
+    {% endif %}
+    {% endblock paginator %}    

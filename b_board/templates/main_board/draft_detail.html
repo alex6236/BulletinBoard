@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+{% load static %}
+ 
+{% block content %}
+
+<div class="line_block">
+    <p>Автор: {{ draft_detail.author }}</p>
+    <a class="all_ad_author" href="{% url 'ad_author' %}">Посмотреть объявления автора</a>
+</div>
+
+<div class="">
+    {% if draft_detail.video %}
+        <div class="video_deteil">
+            <video width="85%" height="" controls>
+            <source src="{{ draft_detail.video.url }}">
+            видео не поддерживается
+            </video>
+        </div>
+    {% elif draft_detail.pictures %}
+        <img src="{{ draft_detail.pictures.url }}" alt="{{ draft_detail.title }}" class="float-start imgshadow" width="180" height="120" >
+    {% else %}
+        <img src="{% static 'img/no_image.jpg' %}"  alt="{{ draft_detail.title }}" class="float-start imgshadow" width="180" height="120" >
+    {% endif %}
+        <h5 class="ad_title text_ad">{{ draft_detail.title|upper }}</h5>
+        <p class="text_ad">{{ draft_detail.text_ad }}</p>
+</div>
+
+<hr>  
+    {% comment %} ============================ {% endcomment %}
+    {% if request.user.is_authenticated and draft_detail.author|lower == request.user.username|lower %}
+    <div class="block_link">
+        <div class="edit_btn block_shadow">
+        <a class="edit_link" href="{% url 'ad_update' slug=draft_detail.slug %}">Редактировать</a>
+        </div>
+        <div class="delete_btn block_shadow">
+        <a class="delete_link " href="{% url 'ad_delete' slug=draft_detail.slug %}">Удалить</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% endblock content %}

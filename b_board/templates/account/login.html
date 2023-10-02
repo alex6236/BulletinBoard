@@ -1,0 +1,43 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block content %}
+
+<h2 class="category_sidebar ad_category">Войти на сайт</h2>
+
+{% get_providers as socialaccount_providers %}
+{% load field_attrs %}
+
+<div class="sub_list">
+  <p>Войдите или  <a href="{{ signup_url }}">зарегистрируйтесь</a></p>
+
+  <form class="login" method="POST" action="{% url 'account_login' %}">
+      {% csrf_token %}
+      {% comment %} {{ form.as_p }} {% endcomment %}
+      <p>*Логин:{{ form.login|attr:"class=form-control" }}</p>
+      <p>*Пароль:{{ form.password|attr:"class=form-control" }}</p>
+      {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+      {% endif %}
+      <button class="btn btn-outline-info" type="submit">Войти</button>
+      <p><a class="button secondaryAction" href="{% url 'account_reset_password' %}">Забыли пароль</a></p>
+  </form>
+  
+  <h6>Войти с...</h6>
+  {% get_providers as socialaccount_providers %}
+  <div >
+  {% for provider in socialaccount_providers %}
+      <div class="d-grid" style="margin-bottom: 7px;">
+          <a title="{{provider.name}}" class="btn btn-outline-info" 
+           href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}"><i class="fa fa-{{provider.name}}"></i>{{provider.name}}</a>
+      </div>
+  {% endfor %}
+  </div>
+</div>
+<img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+
+{% endblock %}
+

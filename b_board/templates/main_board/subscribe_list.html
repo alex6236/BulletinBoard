@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Страница подписки{% endblock title %}
+
+{% block content %}
+
+<h3 class="category_sidebar ad_category">Страница подписки</h3>
+
+<div class="sub_list">
+    <form action="{% url 'subscribe' %}" method="POST">
+        <p> Подпишитесь или внесите изменения в подписку</p>
+        {% csrf_token %}
+            <input type="checkbox" name="subscribe_all" value="1" {% if subscription and subscription.subscribe_all %}checked{% endif %}> Подписаться на все объявления<br>
+        <hr>
+        {% for category in categories %}
+            <input type="checkbox" name="categories" value="{{ category.id }}" {% if subscription and category in subscription.categories.all %}checked{% endif %}> {{ category.name }}<br>
+        {% endfor %}
+        <hr>
+        <div class="btn_block">
+          <button type="submit" class="btn btn-outline-info">Сохранить изменения</button>
+        {% if not subscription %}
+            <p>У вас нет активных подписок</p>
+        {% else %}
+              <a href="{% url 'unsubscribe' %}" class="btn btn-outline-info">Отписаться</a>
+        {% endif %}
+        </div>
+    </form>
+</div>
+    
+<img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+
+{% endblock content %}
+

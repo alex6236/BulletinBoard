@@ -1,0 +1,39 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<h2 class="category_sidebar ad_category __web-inspector-hide-shortcut__">профиль пользователя</h2>
+<div class="card border-0">
+        <div class="card-body bg-dark text-white">
+            <div class="row">
+
+                <div class="col-md-3">
+                    {% if has_avatar %}
+                    <figure >
+                        <img src="{{ profile.avatar.url }}" class="img-fluid rounded-0 rounded-circle" alt="{{ profile }}">
+                    </figure>
+                    {% else %}
+                        <img src="{% static 'img/default.png' %}" class="img-fluid rounded-0 rounded-circle" alt="{{ profile }}">
+                    {% endif %}
+                </div>
+                <div class="col-md-9">
+                     <h5 class="card-title">
+                        {{ profile }}
+                    </h5>
+                    <div class="card-text bg-dark text-white">
+                        <ul>
+                            <li>Имя пользователя: {{ profile.user.username }}</li>
+                            {% if profile.user.get_full_name %} <li>Имя и фамилия: {{ profile.user.get_full_name }}</li> {% endif %}
+                            <li>Заходил: {{ profile.user.last_login }}</li>
+                            <li>Дата рождения: {{ profile.birth_date }}</li>
+                        </ul>
+                    <a href="{% url 'profile_edit' request.user.profile.slug %}" class="btn btn-sm btn-primary btn_profile">Редактировать профиль</a>
+                    <a href="{% url 'ad_author' %}" class="btn btn-sm btn-primary btn_profile">Мои объявления</a>
+                    <a href="{% url 'draft_list'  %}" class="btn btn-sm btn-primary btn_profile">Мои черновики</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+{% endblock %}

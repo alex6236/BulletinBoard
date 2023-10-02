@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+<h3>{{ category }}</h3>
+    {% if results %}
+        {% for ad in results %}
+            <div>
+                <p>Автор: {{ ad.author }}</p>
+                {% if ad.pictures %}
+                    <a href="{{ ad.get_absolute_url }}"><img src="{{ ad.pictures.url }}" alt="{{ ad.title }}" width="150"></a>
+                {% else %}
+                    <img src="{% static 'img/no_image.jpg' %}"  alt="{{ ad.title }}" width="150">
+                {% endif %}
+                <a href="{{ ad.get_absolute_url }}"><strong>{{ ad.title }}</strong></a>
+                <p>{{ ad.text_ad }}</p>
+                <small>{{ ad.time_create }}</small>
+                <span>{{ ad.category_ad }}</span>
+                <a href="{{ ad.get_absolute_url }}">Подробнее>></a>
+                <hr>
+            </div>
+        {% endfor %}
+    {% else %}
+        <h4>Ничего не нашлось</h4>
+    {% endif %}
+
+{% comment %} ====== Пагинация для страницы поиска ==== {% endcomment %}
+
+    {% if results %}
+    <div class="paginator">
+        <span class="arrow_links">
+            {% if results.has_previous %}<a href="?page=1{% if request.GET.q %}&q={{request.GET.q }}{% endif %}">Первая</a>
+                <a class="a_arrow" href="?page={{ results.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q }}{% endif %}">&#129144;</a>
+            {% else %}
+                <span class="page_end page_end_left">Первая &#129144</span>
+            {% endif %}
+        </span>
+
+        <span class="current_page">
+            {{ results.number }} / {{ results.paginator.num_pages }}
+        </span>
+        <span class="arrow_links">
+            {% if results.has_next %}
+                <a class="a_arrow" href="?page={{ results.next_page_number }}{% if request.GET.q %}&q={{request.GET.q }}{% endif %}">&#129146;</a>
+                <a class="a_arrow" href="?page={{ results.paginator.num_pages }}{% if request.GET.q %}&q={{request.GET.q }}{% endif %}">Последняя</a>
+            {% else %}
+                <span class="page_end">&#129146; Последняя</span>
+            {% endif %}
+        </span>
+    </div>
+
+{% endif %}
+
+<img src="{% static 'img/divider_negru.svg' %}" class="line_separator" alt="ship"  id="my-svg">
+
+{% endblock %}
